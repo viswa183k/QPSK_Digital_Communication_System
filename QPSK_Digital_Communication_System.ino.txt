@@ -1,0 +1,49 @@
+// QPSK Digital Communication System
+
+const int signalPin = 9;
+
+String data = "00110111";
+
+void setup() {
+  pinMode(signalPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void transmitSymbol(String bits) {
+
+  if (bits == "00") {
+    tone(signalPin, 1000);
+    delay(100);
+
+  } else if (bits == "01") {
+    tone(signalPin, 1200);
+    delay(100);
+
+  } else if (bits == "10") {
+    tone(signalPin, 1400);
+    delay(100);
+
+  } else if (bits == "11") {
+    tone(signalPin, 1600);
+    delay(100);
+  }
+
+  noTone(signalPin);
+}
+
+void loop() {
+
+  for (int i = 0; i < data.length(); i += 2) {
+
+    String symbol = data.substring(i, i + 2);
+
+    Serial.print("Transmitting: ");
+    Serial.println(symbol);
+
+    transmitSymbol(symbol);
+
+    delay(400);
+  }
+
+  delay(2000);
+}
